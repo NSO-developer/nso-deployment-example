@@ -12,12 +12,18 @@ build:
 	-rm ./nso/run/cdb/compact.lock
 	docker container create --name dummy -v run:/nso hello-world
 	docker cp ./nso dummy:/
+
+	# Uncomment following line and modify to reuse files under /etc/ncs like ncs.conf, crypt keys
 	#docker cp ./ncs dummy:/etc/ncs
+
 	docker rm dummy
 	docker load -i ./images/nso-${VER}.container-image-${BUILD_CONT}.linux.${ARCH}.tar.gz
 	docker load -i ./images/nso-${VER}.container-image-prod.linux.${ARCH}.tar.gz
+
+	# Uncomment following lines to deploy custom image on top of cisco images
 	#docker build -t mod-nso-prod:${VER}  --no-cache --network=host --build-arg type="prod"  --build-arg ver=${VER} --file Dockerfile .
 	#docker build -t mod-nso-dev:${VER}  --no-cache --network=host --build-arg type=${BUILD_CONT}  --build-arg ver=${VER} --file Dockerfile .
+	
 	cp util/Makefile ./packages/
 
 
