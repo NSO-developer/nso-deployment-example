@@ -1,0 +1,7 @@
+images/*
+!images/.gitkeep
+
+ncs
+nso
+rough
+*.swp
