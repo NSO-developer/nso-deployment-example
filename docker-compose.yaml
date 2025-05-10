@@ -1,0 +1,47 @@
+services:
+     PROD:
+       image: cisco-nso-prod:${VER}
+       container_name: nso-prod
+       network_mode: none
+       profiles:
+             - prod
+       environment:
+             - ADMIN_USERNAME=admin
+             - ADMIN_PASSWORD=admin
+       ports:
+             - "2023:2024"
+             - "8889:8888"
+       volumes:
+            - run:/nso
+            - logging:/log
+            - type: bind
+              source: './packages'
+              target: '/nso/run/packages'
+            - type: bind
+              source: './ncs'
+              target: '/etc/ncs'
+
+       healthcheck:
+            test: ncs_cmd -c "wait-start 2"
+            interval: 5s
+            retries: 5
+            start_period: 10s
+            timeout: 10s
+     BUILD:
+            image: cisco-nso-build:${VER}
+            container_name: nso-build
+            network_mode: none
+            profiles:
+                - build
+            volumes:
+                - logging:/log
+                - type: bind
+                  source: './packages'
+                  target: '/packages'
+            command: /bin/bash -c "make all -C /packages/ && sleep infinity"
+
+volumes:
+    run:
+      external: true
+    logging:
+      external: true
