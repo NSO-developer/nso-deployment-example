@@ -1,6 +1,7 @@
 images/*
 !images/.gitkeep
 packages/*
+!packages/.gitkeep
 ncs
 nso
 rough
