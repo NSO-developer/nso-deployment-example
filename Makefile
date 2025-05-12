@@ -23,7 +23,7 @@ build:
 	# Uncomment following lines to deploy custom image on top of cisco images
 	#docker build -t mod-nso-prod:${VER}  --no-cache --network=host --build-arg type="prod"  --build-arg ver=${VER} --file Dockerfile .
 	#docker build -t mod-nso-dev:${VER}  --no-cache --network=host --build-arg type=${BUILD_CONT}  --build-arg ver=${VER} --file Dockerfile .
-	
+
 	cp util/Makefile ./packages/
 
 
@@ -53,9 +53,6 @@ start_compose:
 stop_compose:
 	export VER=${VER} ;docker-compose down  ${ENABLED_SERVICES}
 
-
-compile_packages:
-	docker exec -it nso-build make all -C /nso/run/packages
 
 cli-c:
 	docker exec -it nso-prod ncs_cli -C -u admin
