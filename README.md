@@ -1,4 +1,4 @@
-# Deploy Containerized NSO with Docker volumes and bind mounts in recomended way
+# Deploy Containerized NSO with Docker volumes and bind mounts in recommended way
 
 ![alt Architecture](architecture.png)
 
